@@ -26,6 +26,9 @@ export default {
           <li>
             <a href="/cadastro">CADASTRO</a>
           </li>
+          <li>
+            <a href="/pessoas">PESSOAS</a>
+          </li>
         </ul>
         
       </nav>
@@ -44,6 +47,7 @@ header{
   align-items: center;
 }
 .inicio {
+  height: 130px;
   display: flex;
   flex-direction: column;
 }

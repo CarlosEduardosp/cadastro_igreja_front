@@ -1,5 +1,5 @@
 <template>
-<Header>Contato</Header>  
+<Header>Contato</Header> 
 </template>
 
 <script>

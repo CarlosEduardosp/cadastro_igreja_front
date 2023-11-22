@@ -14,12 +14,6 @@ import { RouterLink, RouterView } from 'vue-router'
   <RouterView />
 </template>
 
-<style scoped>
-*{
-  background: linear-gradient(#34629ee8, #000e27);
-  background-position: center, center;
-  background-size:cover;
-  background-position-y: 0px;
-  background-repeat: no-repeat;
-}
+<style >
+
 </style>
