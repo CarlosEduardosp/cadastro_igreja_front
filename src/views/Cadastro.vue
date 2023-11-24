@@ -2,7 +2,7 @@
   <div class="corpo">
 
 
-    <form action="">
+    <form @submit.prevent="cadastro_pessoas">
 
       <Header></Header>
 
@@ -10,7 +10,7 @@
         <h2 class="titulo">Formulário para cadastro</h2>
       </div>
 
-
+        {{ resposta_requisicao }}
 
       <div class="dadospessoais">
 
@@ -18,26 +18,29 @@
           <p class="subtitulo">Dados Pessoais:</p>
         </div>
 
+        <label for="imagem">Foto</label>
+        <input class="input"  type="file" id="imagem" required >
+
         <label for="nome">Nome</label>
-        <input class="input" type="text" id="nome">
+        <input class="input" v-model="nome" type="text" id="nome" required>
 
         <label for="telefone">Telefone</label>
-        <input class="input" type="text" id="telefone">
+        <input class="input" v-model="telefone" type="text" id="telefone" required>
 
         <label for="Email">Email</label>
-        <input class="input" type="email" id="Email">
+        <input class="input" v-model="email" type="email" id="Email" required>
 
         <label for="data_nascimento">Data de Nascimento</label>
-        <input class="input" type="date" id="data_nascimento">
+        <input class="input" v-model="data_nascimento" type="date" id="data_nascimento" required>
 
         <div class="sexo">
 
           <label for="">Sexo: </label>
           <label>
-            <input class="input-sexo" type="radio" name="sexo" value="masculino"> Masculino
+            <input class="input-sexo" v-model="sexo" type="radio" name="sexo" value="M" required> Masculino
           </label>
           <label>
-            <input class="input-sexo" type="radio" name="sexo" value="feminino"> Feminino
+            <input class="input-sexo" type="radio" v-model="sexo" name="sexo" value="F" required> Feminino
           </label>
 
         </div>
@@ -51,22 +54,22 @@
         </div>
 
         <label>Estado</label>
-        <input class="input" type="text" id="estado">
+        <input class="input" v-model="estado" type="text" id="estado" required>
 
         <label>Cidade</label>
-        <input class="input" type="text" id="cidade">
+        <input class="input" v-model="cidade" type="text" id="cidade" required>
 
         <label>Bairro</label>
-        <input class="input" type="text" id="bairro">
+        <input class="input" v-model="bairro" type="text" id="bairro" required>
 
         <label>Logradouro</label>
-        <input class="input" type="text" id="logradouro">
+        <input class="input" v-model="logradouro" type="text" id="logradouro" required>
 
         <label>Numero</label>
-        <input class="input" type="text" id="numero">
+        <input class="input" v-model="numero" type="text" id="numero" required>
 
         <label>Complemento</label>
-        <input class="input" type="text" id="complemento">
+        <input class="input" v-model="complemento" type="text" id="complemento" required>
 
       </div>
 
@@ -89,45 +92,103 @@ export default {
   },
   data() {
     return {
-      dados_api: []
+      itens: [],
+      nome: '',
+      telefone: '',
+      email: '',
+      data_nascimento: '',
+      sexo: '',
+      estado: '',
+      cidade: '',
+      bairro: '',
+      logradouro: '',
+      numero: '',
+      complemento: '',
+      resposta_requisicao: '',
+      imagem: ''
     }
   },
   methods: {
-    async iniciar() {
+    cadastro_pessoas() {
+
+      // função para formatar a data para o formato aceito na api.
+      const nova_data = this.formatarData(this.data_nascimento)
+
+      // dados do formulario para enviar para a api.
+      const dadosParaEnviar = {
+        'nome': this.nome,
+        'data_nascimento': nova_data,
+        'telefone': this.telefone,
+        'email': this.email,
+        'sexo': this.sexo,
+        'estado': this.estado,
+        'cidade': this.cidade,
+        'bairro': this.bairro,
+        'logradouro': this.logradouro,
+        'numero': this.numero,
+        'status': true,
+        'imagem': "caminho/para/imagem.jpg"
+      };     
+      // chamando a função que realiza a requisição POST.
+      const responsePost = this.inserir_no_banco(dadosParaEnviar)
+
+      // realizando a leitura da promisse, com o '.then';
+      .then(responsePost => { 
+        if(responsePost.success == false){
+          // retorna alguma mensagem de erro na validação do backend.
+          this.resposta_requisicao = responsePost.data;
+        }
+        else{
+          // retorna uma resposta de confirmação.
+          this.resposta_requisicao = responsePost.data;
+
+          // zerando as respostas dos formularios.
+          this.nome = '',
+          this.telefone = '',
+          this.data_nascimento = '',
+          this.email = '',
+          this.sexo = '',
+          this.estado = '',
+          this.cidade = '',
+          this.bairro = '',
+          this.logradouro = '',
+          this.numero = '',
+          this.status = '',
+          this.imagem = ''
+        }
+      })
+      
+    },
+    async inserir_no_banco(dadosParaEnviar) {
+
       try {
-        // Realiza a primeira requisição
-        const data = await ConectarApi();
-        var dados = data;  // dados.body = conteudo, dados.status_code = valor             
-        console.log(dados);
-
-        // Realiza a segunda requisição apenas se a primeira for bem-sucedida
-        const dadosParaEnviar = {
-          'nome': '30',
-          'data_nascimento': "01012000",
-          'telefone': "123456789",
-          'email': "35@vidu.com",
-          'sexo': "m",
-          'estado': "Estado",
-          'cidade': "Cidade",
-          'bairro': "Bairro",
-          'logradouro': "Rua Exemplo",
-          'numero': "123",
-          'status': true,
-          'imagem': "caminho/para/imagem.jpg"
-        };
-
+        // formatando dados para o formato JSON.
         const dadosJson = JSON.stringify(dadosParaEnviar);
 
-        const respostaPost = await fazerRequisicaoPOST(dadosParaEnviar);
-        console.log(respostaPost);
+        // realizando a requisição POST com os dados enviados.
+        const respostapost = await fazerRequisicaoPOST(dadosParaEnviar);
+
+        // retornando a resposta da requisição.
+        return respostapost;
+        
       } catch (error) {
         // Trata os erros para ambas as requisições aqui
         console.error('Erro:', error);
       }
     },
-  },
-  mounted() {
-    this.iniciar();
+
+    formatarData(dataString) {
+      // Divida a string da data nos traços
+      const partes = dataString.split('-');
+
+      // Extraia o ano, mês e dia
+      const ano = partes[0];
+      const mes = partes[1];
+      const dia = partes[2];
+
+      // Retorne a data formatada
+      return `${dia}${mes}${ano}`;
+    }
   }
 }
 

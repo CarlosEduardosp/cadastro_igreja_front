@@ -27,10 +27,15 @@ export async function fazerRequisicaoPOST(dados) {
   //const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   // Fazendo uma solicitação GET usando Axios e retornando a Promise
-  axios.post(apiUrl, dados)
+  return await axios.post(apiUrl, dados)
+
+  // variavel resposta retorna a mensagem de validação da requisição api, se foi inserido ou não e o porque.
+  .then(resposta => {
+    return resposta.data;
+  })
     .then(response => {
       // Manipule os dados da resposta aqui
-      const data = response;
+      const data = response;     
       return data;
     })
     .catch(error => {
@@ -38,5 +43,5 @@ export async function fazerRequisicaoPOST(dados) {
       console.error(error);
       throw error; // Lança o erro novamente para tratamento posterior, se necessário
     });
-
 }
+
