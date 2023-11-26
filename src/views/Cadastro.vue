@@ -198,6 +198,7 @@ export default {
 @media (max-width: 720px) {
 
   .corpo {
+    height: 100vh;
     background: linear-gradient(#34629ee8, #000e27);
     background-position: center, center;
     background-size: cover;
