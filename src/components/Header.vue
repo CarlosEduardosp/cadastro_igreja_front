@@ -8,7 +8,7 @@ export default {
   <div class="inicio">
       <header>
         <h1 class="titulo">Igreja Cristã Nova Vida</h1>
-        <h2>Araruama</h2>
+        <h2 class="subtitulo">Araruama</h2>
       </header>
       
       <nav>
@@ -18,7 +18,7 @@ export default {
             <RouterLink to="/">HOME</RouterLink>
           </li>
           <li>
-            <RouterLink to="/about">SOBRE NÓS</RouterLink>
+            <RouterLink to="/about">HISTÓRIA</RouterLink>
           </li>
           <li>
             <a href="/contato">CONTATO</a>
@@ -27,7 +27,7 @@ export default {
             <a href="/cadastro">CADASTRO</a>
           </li>
           <li>
-            <a href="/pessoas">PESSOAS</a>
+            <a href="/pessoas">ADM</a>
           </li>
         </ul>
         
@@ -39,7 +39,12 @@ export default {
 
 <style scoped>
 .titulo{
+  font-size: 1.5rem;
   padding: 10px;
+}
+
+.subtitulo{
+  font-size: 1.3rem;
 }
 header{
   display: flex;
@@ -47,21 +52,21 @@ header{
   align-items: center;
 }
 .inicio {
-  height: 130px;
   display: flex;
   flex-direction: column;
 }
+
 ul {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 20px;
-  padding: 10px;
+  gap: 4%;
+  padding: 2%;
 }
 
 ul li {
   list-style-type: none;
-  font-size: 15px;
+  font-size: 0.8rem;
 }
 
 ul li a {

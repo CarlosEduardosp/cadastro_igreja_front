@@ -9,8 +9,8 @@
       <div>
         <h2 class="titulo">Formulário para cadastro</h2>
       </div>
-
-        {{ resposta_requisicao }}
+        
+      {{ resposta_requisicao }}
 
       <div class="dadospessoais">
 
@@ -19,10 +19,10 @@
         </div>
 
         <label for="imagem">Foto</label>
-        <input class="input"  type="file" id="imagem" required >
+        <input class="input" type="file" id="imagem" accept="image/*" @change="carregarImagem" required>
 
         <label for="nome">Nome</label>
-        <input class="input" v-model="nome" type="text" id="nome" required>
+        <input class="input" v-model="nome" type="text" id="nome"  required>
 
         <label for="telefone">Telefone</label>
         <input class="input" v-model="telefone" type="text" id="telefone" required>
@@ -36,13 +36,14 @@
         <div class="sexo">
 
           <label for="">Sexo: </label>
-          <label>
-            <input class="input-sexo" v-model="sexo" type="radio" name="sexo" value="M" required> Masculino
-          </label>
-          <label>
-            <input class="input-sexo" type="radio" v-model="sexo" name="sexo" value="F" required> Feminino
-          </label>
-
+          <div>
+            <label>
+              <input class="input-sexo" v-model="sexo" type="radio" name="sexo" value="M" required> Masculino
+            </label>
+            <label>
+              <input class="input-sexo" type="radio" v-model="sexo" name="sexo" value="F" required> Feminino
+            </label>
+          </div>
         </div>
       </div>
 
@@ -105,7 +106,8 @@ export default {
       numero: '',
       complemento: '',
       resposta_requisicao: '',
-      imagem: ''
+      imagem: '',
+      urlImagem: 'link_imagem', // url da imagem carregada
     }
   },
   methods: {
@@ -113,6 +115,7 @@ export default {
 
       // função para formatar a data para o formato aceito na api.
       const nova_data = this.formatarData(this.data_nascimento)
+      
 
       // dados do formulario para enviar para a api.
       const dadosParaEnviar = {
@@ -127,37 +130,37 @@ export default {
         'logradouro': this.logradouro,
         'numero': this.numero,
         'status': true,
-        'imagem': "caminho/para/imagem.jpg"
-      };     
+        'imagem': this.urlImagem
+      };
       // chamando a função que realiza a requisição POST.
       const responsePost = this.inserir_no_banco(dadosParaEnviar)
 
-      // realizando a leitura da promisse, com o '.then';
-      .then(responsePost => { 
-        if(responsePost.success == false){
-          // retorna alguma mensagem de erro na validação do backend.
-          this.resposta_requisicao = responsePost.data;
-        }
-        else{
-          // retorna uma resposta de confirmação.
-          this.resposta_requisicao = responsePost.data;
+        // realizando a leitura da promisse, com o '.then';
+        .then(responsePost => {
+          if (responsePost.success == false) {
+            // retorna alguma mensagem de erro na validação do backend.
+            this.resposta_requisicao = responsePost.data;
+          }
+          else {
+            // retorna uma resposta de confirmação.
+            this.resposta_requisicao = responsePost.data;
 
-          // zerando as respostas dos formularios.
-          this.nome = '',
-          this.telefone = '',
-          this.data_nascimento = '',
-          this.email = '',
-          this.sexo = '',
-          this.estado = '',
-          this.cidade = '',
-          this.bairro = '',
-          this.logradouro = '',
-          this.numero = '',
-          this.status = '',
-          this.imagem = ''
-        }
-      })
-      
+            // zerando as respostas dos formularios.
+            this.nome = '',
+              this.telefone = '',
+              this.data_nascimento = '',
+              this.email = '',
+              this.sexo = '',
+              this.estado = '',
+              this.cidade = '',
+              this.bairro = '',
+              this.logradouro = '',
+              this.numero = '',
+              this.status = '',
+              this.imagem = ''
+          }
+        })
+
     },
     async inserir_no_banco(dadosParaEnviar) {
 
@@ -170,7 +173,7 @@ export default {
 
         // retornando a resposta da requisição.
         return respostapost;
-        
+
       } catch (error) {
         // Trata os erros para ambas as requisições aqui
         console.error('Erro:', error);
@@ -188,6 +191,21 @@ export default {
 
       // Retorne a data formatada
       return `${dia}${mes}${ano}`;
+    },
+    carregarImagem(event) {
+      if (event.target.files && event.target.files.length > 0) {
+      if (event.target.files.length > 0) {
+        const leitor = new FileReader();
+
+        leitor.onload = (e) => {
+          // Atualize a URL da imagem no estado do componente
+          this.urlImagem = e.target.result;
+        };
+
+        leitor.readAsDataURL(event.target.files[0]);
+        console.log(leitor.readAsDataURL(event.target.files[0]))
+      }
+    }
     }
   }
 }
@@ -197,8 +215,102 @@ export default {
 <style scoped>
 @media (max-width: 720px) {
 
+
+  .titulo {
+    padding: 20px 0px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dadospessoais {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fcfcfc;
+    width: 70%;
+    height: 50%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px;
+    margin-bottom: 5%;
+  }
+
+  .end {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fcfcfc;
+    width: 70%;
+    height: 50%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px;
+  }
+
+  .sub {
+    width: 80%;
+    background-color: rgb(198, 240, 247);
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 10px;
+  }
+
+  .subtitulo {
+    font-size: 1rem;
+    color: #000000;
+  }
+
+  .input {
+    width: 80%;
+    height: 2rem;
+    text-align: center;
+    margin: 2px 0px 10px 0px;
+    border-radius: 5px;
+    border: none;
+    background-color: #e4e4e4;
+    outline: none;
+
+  }
+
+  button {
+    padding: 20px;
+    width: 70%;
+    font-size: 15px;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    border: none;
+    background-color: #0055a5;
+    color: #ffffff;
+    transition: 0.5s;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+
+  button:hover {
+    font-size: 20px;
+    background-color: #0055a5;
+    color: #ffffff;
+  }
+
+  .sexo {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+}
+
+@media (min-width: 721px) {
   .corpo {
-    height: 100vh;
+    height: 100%;
     background: linear-gradient(#34629ee8, #000e27);
     background-position: center, center;
     background-size: cover;
@@ -219,8 +331,8 @@ export default {
     align-items: center;
     justify-content: center;
     background-color: #fcfcfc;
-    width: 300px;
-    height: 350px;
+    width: 70%;
+    height: 450px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px;
     margin-bottom: 30px;
@@ -232,14 +344,14 @@ export default {
     align-items: center;
     justify-content: center;
     background-color: #fcfcfc;
-    width: 300px;
+    width: 70%;
     height: 450px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px;
   }
 
   .sub {
-    width: 280px;
+    width: 80%;
     background-color: rgb(198, 240, 247);
     padding: 10px;
     text-align: center;
@@ -253,7 +365,7 @@ export default {
   }
 
   .input {
-    width: 250px;
+    width: 80%;
     height: 30px;
     text-align: center;
     margin: 2px 0px 10px 0px;
@@ -265,7 +377,7 @@ export default {
 
   button {
     padding: 10px;
-    width: 300px;
+    width: 70%;
     height: 50px;
     font-size: 15px;
     letter-spacing: 2px;
@@ -275,114 +387,7 @@ export default {
     color: #ffffff;
     transition: 0.5s;
     font-weight: bold;
-  }
-
-  button:hover {
-    font-size: 20px;
-    background-color: #0055a5;
-    color: #ffffff;
-  }
-}
-
-@media (min-width: 721px) {
-  .hr1 {
-    margin-top: 10px;
-    height: 1px;
-    border: none;
-    background-color: #0055a5;
-  }
-
-  .hr2 {
-    margin-bottom: 10px;
-    height: 1px;
-    border: none;
-    background-color: #0055a5;
-  }
-
-  .titulo {
-    padding: 10px;
-  }
-
-  header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .inicio {
-    display: flex;
-    flex-direction: column;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .dadospessoais {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fcfcfc;
-    width: 300px;
-    height: 350px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px;
-    margin-bottom: 30px;
-  }
-
-  .end {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fcfcfc;
-    width: 300px;
-    height: 450px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px;
-  }
-
-  .sub {
-    width: 280px;
-    background-color: rgb(198, 240, 247);
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px;
-    margin: 10px;
-  }
-
-  .subtitulo {
-    font-size: 20px;
-    color: #000000;
-  }
-
-  .input {
-    width: 250px;
-    height: 30px;
-    text-align: center;
-    margin: 2px 0px 10px 0px;
-    border-radius: 5px;
-    border: none;
-    background-color: #e4e4e4;
-    outline: none;
-  }
-
-  button {
-    padding: 10px;
-    width: 300px;
-    height: 50px;
-    font-size: 15px;
-    letter-spacing: 2px;
-    border-radius: 10px;
-    border: none;
-    background-color: #0055a5;
-    color: #ffffff;
-    transition: 0.5s;
-    font-weight: bold;
+    margin-top: 30px;
   }
 
   button:hover {
@@ -391,21 +396,8 @@ export default {
     color: #ffffff;
   }
 
-  ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 50px;
-    padding: 10px;
-  }
-
-  ul li {
-    list-style-type: none;
-    font-size: 15px;
-  }
-
-  ul li a {
-    text-decoration: none;
+  .sexo {
+    margin: 10px 0px;
   }
 
 }

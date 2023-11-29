@@ -4,7 +4,37 @@
             <Header></Header>
         </div>
         <div class="section">
-            <ul>
+
+
+
+
+            <form @submit.prevent="efetuarLogin" v-show="acesso == false">
+
+
+                <div>
+                <h2 class="titulo">Efetue o Login:</h2>
+                </div>
+
+                
+
+                <div class="dadospessoais">
+                    <div class="dados">
+                    <label for="login">Login</label>
+                    <input class="input" v-model="login" type="text" placeholder="Login" id="login" required>
+
+                <label for="nome">Senha</label>
+                <input class="input" v-model="senha" type="password" placeholder="senha" id="senha" required>
+                </div>
+                </div>
+                
+                <button class="entrar" type="submit">Entrar</button>
+
+            </form>
+
+
+
+
+            <ul v-show="acesso == true">
                 <div class="titulo">
                     <p>Pessoas Cadastradas</p>
                 </div>
@@ -21,10 +51,7 @@
                     </div>
                     <div class="subtelefone">
                         Telefone
-                    </div>
-                    <div class="subemail">
-                        Email
-                    </div>
+                    </div>                    
 
                 </div>
 
@@ -34,12 +61,16 @@
                     <div class="card">
                         <div class="id">{{ item.id }}</div>
                         <div class="nome">{{ item.nome }}</div>
-                        <div class="idade">{{ calcularIdade('14051986') }}</div>
+                        <div class="idade">{{ item.idade }} </div>
                         <div class="telefone">{{ item.telefone }}</div>
-                        <div class="email">{{ item.email }}</div>
+                        
                     </div>
                 </li>
+                
             </ul>
+
+            <button class="sair" @click="efetuarLogin" v-show="acesso == true">Sair</button> 
+
             <footer class="rodape">
             <h1>Rodapé</h1>
         </footer>
@@ -60,7 +91,12 @@ export default {
     },
     data() {
         return {
-            dados_api: []
+            dados_api: [],
+            acesso: false,
+            login: '',
+            senha: '',
+            login_pessoas: 'icnvararuama',
+            login_senha: '13709852'
         }
     },
     methods: {
@@ -106,6 +142,11 @@ export default {
             }
 
             return idade;
+        },
+        efetuarLogin(){
+            this.acesso = !this.acesso
+            this.login = ''
+            this.senha = ''            
         }
     },
     mounted() {
@@ -116,15 +157,44 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width: 720px) {
-    .corpo {
+@media (max-width: 720px) {    
+
+    .corpo{
         height: 100vh;
-        background: linear-gradient(#34629ee8, #000e27);
-        background-position: center, center;
-        background-size: cover;
-        background-position-y: 0px;
-        background-repeat: no-repeat;        
     }
+
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: (#00000085);
+    box-shadow: 0px 0px 10px 0px;
+    border-radius: 10px;
+    width: 70%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    height: 30rem;
+  }
+
+  .dadospessoais { 
+    width: 80%;
+    height: 40%;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+  }
+  
+  .dados{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 1.2rem;
+  }
 
     .section {
         display: flex;
@@ -133,19 +203,64 @@ export default {
         justify-content: center;
     }
 
+    .input {
+    width: 100%;
+    height: 2rem;
+    text-align: center;
+    margin: 2px 0px 10px 0px;
+    border-radius: 5px;
+    border: none;
+    outline: none; 
+    font-size: 1rem; 
+    padding: 20px;  
+  }
+
     .titulo {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 10px;
-        font-size: 20px;
+        font-size: 1.3rem;
         font-weight: bold;
     }
 
+    .entrar {
+    padding: 15px;
+    width: 65%;
+    font-size: 15px;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    border: none;
+    background-color: #0055a5;
+    color: #ffffff;
+    transition: 0.5s;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+
+  .sair {
+    padding: 15px;
+    width: 80%;
+    font-size: 15px;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    border: none;
+    background-color: #0055a5;
+    color: #ffffff;
+    transition: 0.5s;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+
     ul {
-        width: 90%;
+        width: 80%;
         background-color: #f3f3f3;
         border-radius: 10px;
+        margin-top: 20px;
+        box-shadow: 0px 0px 10px 0px;
+
     }
 
     li {
@@ -164,50 +279,45 @@ export default {
         width: 100%;
         display: flex;
         flex-direction: row;
-        padding: 3px 0px;
+        padding: 10px 0px;
+        align-items: center;
+        justify-content: baseline;
     }
 
-    .id {
+    .id{
         width: 5%;
+        margin-left: 5px;
+    }
+
+    .nome{
+        width: 50%;
         display: flex;
+        align-items: center;
         justify-content: center;
     }
 
-    .nome {
-        width: 28%;
-
+    .idade{
+        width: 17%;
+        
     }
-
-    .idade {
-        width: 10%;
-
-    }
-
-    .telefone {
-        width: 20%;
-
-    }
-
-    .email {}
-
 
     .subs {
         display: flex;
         padding: 10px 0px;
-        font-size: 18px;
+        font-size: 1rem;
     }
 
     .subregistro {
-        width: 5%;
-        padding-left: 7px;
+        width: 20%;
+        margin-left: 4px;
     }
 
     .subnome {
-        width: 26%;
+        width: 30%;
     }
 
     .subidade {
-        width: 11%;
+        width: 23%;
     }
 
     .subtelefone {
@@ -312,4 +422,4 @@ export default {
     .subtelefone {
         width: 20%;
     }
-}</style>
+}</style> 
