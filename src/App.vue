@@ -19,7 +19,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped>
 @media (max-width: 720px) {
   .app{
-    height: 100%;
+    height: 1200px;
     background: linear-gradient(#34629ee8, #000e27);
     background-position: center, center;
     background-size: cover;

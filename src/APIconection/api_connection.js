@@ -45,3 +45,28 @@ export async function fazerRequisicaoPOST(dados) {
     });
 }
 
+
+export async function fazerRequisicaoImagemPOST(nome, id_pessoa, imagem) {
+  // URL da API fictícia
+  const apiUrl = 'https://backend-cadigreja.onrender.com/inserir_imagem';
+ 
+
+  // Fazendo uma solicitação GET usando Axios e retornando a Promise
+  return await axios.post(apiUrl, nome, id_pessoa, imagem)
+
+  // variavel resposta retorna a mensagem de validação da requisição api, se foi inserido ou não e o porque.
+  .then(resposta => {
+    return resposta.data;
+  })
+    .then(response => {
+      // Manipule os dados da resposta aqui
+      const data = response;     
+      return data;
+    })
+    .catch(error => {
+      // Trate os erros de solicitação ou resposta
+      console.error(error);
+      throw error; // Lança o erro novamente para tratamento posterior, se necessário
+    });
+}
+

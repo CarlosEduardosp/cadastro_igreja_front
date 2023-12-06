@@ -9,7 +9,7 @@
       <div>
         <h2 class="titulo">Formulário para cadastro</h2>
       </div>
-        
+
       {{ resposta_requisicao }}
 
       <div class="dadospessoais">
@@ -19,10 +19,10 @@
         </div>
 
         <label for="imagem">Foto</label>
-        <input class="input" type="file" id="imagem" accept="image/*" @change="carregarImagem" required>
+        <input class="input" type="file" id="imagem" accept="image/*" ref="fileInput" @change="carregarImagem" required>
 
         <label for="nome">Nome</label>
-        <input class="input" v-model="nome" type="text" id="nome"  required>
+        <input class="input" v-model="nome" type="text" id="nome" required>
 
         <label for="telefone">Telefone</label>
         <input class="input" v-model="telefone" type="text" id="telefone" required>
@@ -74,7 +74,7 @@
 
       </div>
 
-      <button type="submit">CADASTRAR</button>
+      <button type="submit" @click="enviar">CADASTRAR</button>
 
     </form>
   </div>
@@ -84,6 +84,9 @@
 import Header from '../components/header.vue';
 import { ConectarApi } from '../APIconection/api_connection';
 import { fazerRequisicaoPOST } from '../APIconection/api_connection';
+import { fazerRequisicaoImagemPOST } from '../APIconection/api_connection'
+import { enviarParaAPI } from '../APIconection/postImagem'
+
 
 export default {
   name: 'Cadastro',
@@ -107,7 +110,6 @@ export default {
       complemento: '',
       resposta_requisicao: '',
       imagem: '',
-      urlImagem: 'link_imagem', // url da imagem carregada
     }
   },
   methods: {
@@ -115,7 +117,7 @@ export default {
 
       // função para formatar a data para o formato aceito na api.
       const nova_data = this.formatarData(this.data_nascimento)
-      
+
 
       // dados do formulario para enviar para a api.
       const dadosParaEnviar = {
@@ -130,10 +132,11 @@ export default {
         'logradouro': this.logradouro,
         'numero': this.numero,
         'status': true,
-        'imagem': this.urlImagem
+        'complemento': this.complemento,
       };
       // chamando a função que realiza a requisição POST.
       const responsePost = this.inserir_no_banco(dadosParaEnviar)
+
 
         // realizando a leitura da promisse, com o '.then';
         .then(responsePost => {
@@ -144,6 +147,17 @@ export default {
           else {
             // retorna uma resposta de confirmação.
             this.resposta_requisicao = responsePost.data;
+
+            // chamada da função que realiza o post da imagem
+            const respostaimagem = enviarParaAPI(this.imagem, this.nome, 100)
+              .then(respostaimagem => {
+                console.log('resposta imagem:', respostaimagem);
+              })
+              .catch(error => {
+                console.error('Erro:', error);
+              });
+
+
 
             // zerando as respostas dos formularios.
             this.nome = '',
@@ -157,7 +171,7 @@ export default {
               this.logradouro = '',
               this.numero = '',
               this.status = '',
-              this.imagem = ''
+              this.complemento
           }
         })
 
@@ -192,21 +206,18 @@ export default {
       // Retorne a data formatada
       return `${dia}${mes}${ano}`;
     },
+
+    // Função chamada quando o usuário seleciona uma imagem
     carregarImagem(event) {
-      if (event.target.files && event.target.files.length > 0) {
-      if (event.target.files.length > 0) {
-        const leitor = new FileReader();
+      const fileInput = event.target;
+      if (fileInput.files.length > 0) {
 
-        leitor.onload = (e) => {
-          // Atualize a URL da imagem no estado do componente
-          this.urlImagem = e.target.result;
-        };
-
-        leitor.readAsDataURL(event.target.files[0]);
-        console.log(leitor.readAsDataURL(event.target.files[0]))
+        // Obtém a primeira imagem do array de arquivos
+        const imagem = fileInput.files[0];
+        this.imagem = imagem
       }
-    }
-    }
+    },
+
   }
 }
 
@@ -214,8 +225,6 @@ export default {
   
 <style scoped>
 @media (max-width: 720px) {
-
-
   .titulo {
     padding: 20px 0px;
   }

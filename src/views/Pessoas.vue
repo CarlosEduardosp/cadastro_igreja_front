@@ -293,12 +293,18 @@ export default {
         width: 50%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: baseline;
     }
 
     .idade{
-        width: 17%;
+        width: 8%;
+        margin-right: 2%;
+        margin-left: 2%;
         
+    }
+
+    .telefone{
+        width: 35%;
     }
 
     .subs {
@@ -308,16 +314,16 @@ export default {
     }
 
     .subregistro {
-        width: 20%;
+        width: 10%;
         margin-left: 4px;
     }
 
     .subnome {
-        width: 30%;
+        width: 42%;
     }
 
     .subidade {
-        width: 23%;
+        width: 18%;
     }
 
     .subtelefone {

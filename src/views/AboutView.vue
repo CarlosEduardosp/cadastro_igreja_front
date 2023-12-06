@@ -2,20 +2,26 @@
   <div class="section">
     <Header></Header>
     <div class="main">
-      História
+      conteudo sobre
     </div>
+      <footer>
+        <rodape></rodape>
+      </footer>
+    
   </div>
   
 </template>
 
 <script>
 import Header from '../components/header.vue'
+import rodape from '../components/rodape.vue';
 
 export default {
   name: 'Sobre',
 
   components: {
-    Header
+    Header,
+    rodape
   }
 
 }

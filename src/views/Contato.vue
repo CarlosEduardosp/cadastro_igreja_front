@@ -2,20 +2,50 @@
     <div class="section">
         <Header></Header>
         <div class="main">
-        Contato
+            <label for="imagem">Imagem</label>
+            <input class="input" type="file" id="imagem" accept="image/*" ref="fileInput"  @change="carregarImagem" required>
+            <button @click="enviar">Confirmar</button>            
+        </div>
+        <footer>
+            <rodape></rodape>
+        </footer>
     </div>
-    </div>
-    
 </template>
 
 <script>
 import Header from '../components/header.vue';
+import rodape from '../components/rodape.vue';
+import {enviarParaAPI} from '../APIconection/postImagem'
 
 export default {
     name: 'Contato',
     components: {
-        Header
-    }
+        Header,
+        rodape
+    },
+    data () {
+        return {
+            imagem: '',
+        }
+    },
+    // No seu componente Vue
+  methods: {   
+
+    // Função chamada quando o usuário seleciona uma imagem
+    carregarImagem(event) {
+      const fileInput = event.target;
+      if (fileInput.files.length > 0) {
+
+        // Obtém a primeira imagem do array de arquivos
+        const imagem = fileInput.files[0];
+        this.imagem = imagem                
+      }
+    },
+    enviar(){
+      enviarParaAPI(this.imagem)
+    }    
+  }
+
 }
 </script>
 
@@ -27,7 +57,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        
+
     }
 }
 
@@ -41,7 +71,7 @@ export default {
         flex-direction: column;
         align-items: center;
         background-color: #fcfcfc;
-        
+
     }
 
 }

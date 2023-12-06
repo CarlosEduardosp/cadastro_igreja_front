@@ -1,12 +1,14 @@
 <script >
 import { RouterLink, RouterView } from 'vue-router'
 import Header from '../components/Header.vue';
+import rodape from '../components/rodape.vue';
 
 export default {
   name: 'Home',
 
   components: {
-    Header
+    Header,
+    rodape
   }
 
 }
@@ -18,9 +20,12 @@ export default {
     
       <Header></Header>
       
+      <div class="main">
+        conteudo home
+        </div>
     
     <footer>
-      rodapé
+      <rodape></rodape>
     </footer>
     <RouterView></RouterView>
   </div>
