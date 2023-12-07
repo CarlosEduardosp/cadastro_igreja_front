@@ -2,9 +2,7 @@
     <div class="section">
         <Header></Header>
         <div class="main">
-            <label for="imagem">Imagem</label>
-            <input class="input" type="file" id="imagem" accept="image/*" ref="fileInput"  @change="carregarImagem" required>
-            <button @click="enviar">Confirmar</button>            
+            contato         
         </div>
         <footer>
             <rodape></rodape>
@@ -15,7 +13,6 @@
 <script>
 import Header from '../components/header.vue';
 import rodape from '../components/rodape.vue';
-import {enviarParaAPI} from '../APIconection/postImagem'
 
 export default {
     name: 'Contato',
@@ -29,21 +26,10 @@ export default {
         }
     },
     // No seu componente Vue
-  methods: {   
+  methods: { 
 
-    // Função chamada quando o usuário seleciona uma imagem
-    carregarImagem(event) {
-      const fileInput = event.target;
-      if (fileInput.files.length > 0) {
-
-        // Obtém a primeira imagem do array de arquivos
-        const imagem = fileInput.files[0];
-        this.imagem = imagem                
-      }
-    },
-    enviar(){
-      enviarParaAPI(this.imagem)
-    }    
+    
+       
   }
 
 }

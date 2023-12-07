@@ -140,16 +140,20 @@ export default {
 
         // realizando a leitura da promisse, com o '.then';
         .then(responsePost => {
+          
           if (responsePost.success == false) {
+
             // retorna alguma mensagem de erro na validação do backend.
-            this.resposta_requisicao = responsePost.data;
+            this.resposta_requisicao = responsePost.message;
           }
           else {
             // retorna uma resposta de confirmação.
-            this.resposta_requisicao = responsePost.data;
+            this.resposta_requisicao = responsePost.message;
 
+            console.log(responsePost.data.id)
             // chamada da função que realiza o post da imagem
-            const respostaimagem = enviarParaAPI(this.imagem, this.nome, 100)
+            const respostaimagem = enviarParaAPI(this.imagem, this.nome, responsePost.data.id)
+
               .then(respostaimagem => {
                 console.log('resposta imagem:', respostaimagem);
               })
