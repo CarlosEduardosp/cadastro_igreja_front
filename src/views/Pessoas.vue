@@ -12,21 +12,21 @@
 
 
                 <div>
-                <h2 class="titulo">Efetue o Login:</h2>
+                    <h2 class="titulo">Efetue o Login:</h2>
                 </div>
 
-                
+
 
                 <div class="dadospessoais">
                     <div class="dados">
-                    <label for="login">Login</label>
-                    <input class="input" v-model="login" type="text" placeholder="Login" id="login" required>
+                        <label for="login">Login</label>
+                        <input class="input" v-model="login" type="text" placeholder="Login" id="login" required>
 
-                <label for="nome">Senha</label>
-                <input class="input" v-model="senha" type="password" placeholder="senha" id="senha" required>
+                        <label for="nome">Senha</label>
+                        <input class="input" v-model="senha" type="password" placeholder="senha" id="senha" required>
+                    </div>
                 </div>
-                </div>
-                
+
                 <button class="entrar" type="submit">Entrar</button>
 
             </form>
@@ -34,7 +34,7 @@
 
 
 
-            <ul v-show="acesso == true">
+            <ul v-show="acesso == true && viewpessoa == false">
                 <div class="titulo">
                     <p>Pessoas Cadastradas</p>
                 </div>
@@ -51,37 +51,46 @@
                     </div>
                     <div class="subtelefone">
                         Telefone
-                    </div>                    
+                    </div>
 
                 </div>
 
 
-                <li v-for="item in dados_api" :key="item.id">
+                <li v-for="item in dados_api" :key="item.id"
+                    @click="abrirpessoa(item), viewpessoa = true, obterImagem(item.id)">
 
                     <div class="card">
                         <div class="id">{{ item.id }}</div>
                         <div class="nome">{{ item.nome }}</div>
                         <div class="idade">{{ item.idade }} </div>
                         <div class="telefone">{{ item.telefone }}</div>
-                        
+
                     </div>
                 </li>
-                
+
             </ul>
 
-            <button class="sair" @click="efetuarLogin" v-show="acesso == true">Sair</button> 
+            <div class="pessoa" v-show="viewpessoa == true">
+                {{ item_pessoa }}                
+                <img :src="imagem" alt="">
+            </div>
+
+            <button class="sair" @click="efetuarLogin" v-show="acesso == true && viewpessoa == false">Sair</button>
+            <button class="sair" @click="acesso = true, viewpessoa = false, imagem = ''"
+                v-show="viewpessoa == true">Voltar</button>Carregando Imagem...
 
             <footer class="rodape">
-            <h1>Rodapé</h1>
-        </footer>
+                <h1>Rodapé</h1>
+            </footer>
         </div>
-        
+
     </div>
 </template>
 
 <script>
 import Header from '../components/header.vue'
 import { ConectarApi } from '../APIconection/api_connection';
+import { obterImagemDaAPI } from '../APIconection/getimagemid'
 
 export default {
     name: 'Pessoas',
@@ -93,10 +102,13 @@ export default {
         return {
             dados_api: [],
             acesso: false,
+            viewpessoa: false,
             login: '',
             senha: '',
             login_pessoas: 'icnvararuama',
-            login_senha: '13709852'
+            login_senha: '13709852',
+            item_pessoa: '',
+            imagem: ''
         }
     },
     methods: {
@@ -105,49 +117,37 @@ export default {
 
             // Realiza a primeira requisição
             const data = await ConectarApi();
-            console.log(data);
+
 
             if (data.status_code == 200) {
                 this.dados_api = data.body
             }
 
         },
-
-        calcularIdade(dataNascimentoString) {
-            // Verifica se a string de entrada tem o formato esperado
-            if (!/^\d{8}$/.test(dataNascimentoString)) {
-                throw new Error('Formato de data inválido. Use o formato DDMMYYYY.');
-            }
-
-            // Extrai os componentes da data da string
-            const dia = parseInt(dataNascimentoString.substring(0, 2), 10);
-            const mes = parseInt(dataNascimentoString.substring(2, 4), 10);
-            const ano = parseInt(dataNascimentoString.substring(4), 10);
-
-            // Obtém a data atual
-            const hoje = new Date();
-
-            // Obtém o mês atual (1 a 12, janeiro a dezembro)
-            const mesAtual = hoje.getMonth() + 1;
-
-            // Obtém o ano atual
-            const anoAtual = hoje.getFullYear();
-
-            // Calcula a idade
-            let idade = anoAtual - ano;
-
-            // Ajusta a idade se o aniversário ainda não ocorreu este ano
-            if (mesAtual < mes || (mesAtual === mes && hoje.getDate() < dia)) {
-                idade--;
-            }
-
-            return idade;
+        abrirpessoa(item) {
+            this.item_pessoa = item
         },
-        efetuarLogin(){
+
+        efetuarLogin() {
             this.acesso = !this.acesso
             this.login = ''
-            this.senha = ''            
-        }
+            this.senha = ''
+            this.viewpessoa = false
+        },
+        obterImagem(id) {
+
+            // Use a função e manipule a URL da imagem como quiser
+            obterImagemDaAPI(id)
+                .then(url => {
+                    this.imagem = url;
+                    // Faça o que precisar com a URL da imagem, como exibir em uma tag <img>
+                })
+                .catch(error => {
+                    console.error('Erro ao obter imagem:', error);
+                });
+
+        },
+
     },
     mounted() {
         this.iniciar();
@@ -157,44 +157,44 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width: 720px) {    
+@media (max-width: 720px) {
 
-    .corpo{
+    .corpo {
         height: 100vh;
     }
 
     form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: (#00000085);
-    box-shadow: 0px 0px 10px 0px;
-    border-radius: 10px;
-    width: 70%;
-    margin-bottom: 5%;
-    margin-top: 5%;
-    height: 30rem;
-  }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: (#00000085);
+        box-shadow: 0px 0px 10px 0px;
+        border-radius: 10px;
+        width: 70%;
+        margin-bottom: 5%;
+        margin-top: 5%;
+        height: 30rem;
+    }
 
-  .dadospessoais { 
-    width: 80%;
-    height: 40%;   
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-  }
-  
-  .dados{
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    font-size: 1.2rem;
-  }
+    .dadospessoais {
+        width: 80%;
+        height: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dados {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        font-size: 1.2rem;
+    }
 
     .section {
         display: flex;
@@ -204,16 +204,16 @@ export default {
     }
 
     .input {
-    width: 100%;
-    height: 2rem;
-    text-align: center;
-    margin: 2px 0px 10px 0px;
-    border-radius: 5px;
-    border: none;
-    outline: none; 
-    font-size: 1rem; 
-    padding: 20px;  
-  }
+        width: 100%;
+        height: 2rem;
+        text-align: center;
+        margin: 2px 0px 10px 0px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        padding: 20px;
+    }
 
     .titulo {
         display: flex;
@@ -225,34 +225,34 @@ export default {
     }
 
     .entrar {
-    padding: 15px;
-    width: 65%;
-    font-size: 15px;
-    letter-spacing: 2px;
-    border-radius: 10px;
-    border: none;
-    background-color: #0055a5;
-    color: #ffffff;
-    transition: 0.5s;
-    font-weight: bold;
-    margin-top: 5%;
-    margin-bottom: 10%;
-  }
+        padding: 15px;
+        width: 65%;
+        font-size: 15px;
+        letter-spacing: 2px;
+        border-radius: 10px;
+        border: none;
+        background-color: #0055a5;
+        color: #ffffff;
+        transition: 0.5s;
+        font-weight: bold;
+        margin-top: 5%;
+        margin-bottom: 10%;
+    }
 
-  .sair {
-    padding: 15px;
-    width: 80%;
-    font-size: 15px;
-    letter-spacing: 2px;
-    border-radius: 10px;
-    border: none;
-    background-color: #0055a5;
-    color: #ffffff;
-    transition: 0.5s;
-    font-weight: bold;
-    margin-top: 5%;
-    margin-bottom: 10%;
-  }
+    .sair {
+        padding: 15px;
+        width: 80%;
+        font-size: 15px;
+        letter-spacing: 2px;
+        border-radius: 10px;
+        border: none;
+        background-color: #0055a5;
+        color: #ffffff;
+        transition: 0.5s;
+        font-weight: bold;
+        margin-top: 5%;
+        margin-bottom: 10%;
+    }
 
     ul {
         width: 80%;
@@ -284,26 +284,26 @@ export default {
         justify-content: baseline;
     }
 
-    .id{
+    .id {
         width: 5%;
         margin-left: 5px;
     }
 
-    .nome{
+    .nome {
         width: 50%;
         display: flex;
         align-items: center;
         justify-content: baseline;
     }
 
-    .idade{
+    .idade {
         width: 8%;
         margin-right: 2%;
         margin-left: 2%;
-        
+
     }
 
-    .telefone{
+    .telefone {
         width: 35%;
     }
 
@@ -329,9 +329,8 @@ export default {
     .subtelefone {
         width: 20%;
     }
-    .rodape{
 
-    }
+    .rodape {}
 }
 
 @media (min-width: 721px) {
@@ -428,4 +427,5 @@ export default {
     .subtelefone {
         width: 20%;
     }
-}</style> 
+}
+</style> 
