@@ -16,10 +16,9 @@ export default {
             viewpessoa: false,
             login: '',
             senha: '',
-            login_pessoas: 'icnvararuama',
-            login_senha: '13709852',
             item_pessoa: '',
-            imagem: ''
+            imagem: '',
+            msg_login: ''
         }
     },
     methods: {
@@ -39,11 +38,30 @@ export default {
             this.item_pessoa = item
         },
 
-        efetuarLogin() {
-            this.acesso = !this.acesso
+        sair() {
+
+            this.acesso = false
             this.login = ''
             this.senha = ''
-            this.viewpessoa = false
+            this.msg_login = ''
+        },
+
+        efetuarLogin() {
+            if (this.login == 'icnvararuama' & this.senha == '123456') {
+                this.acesso = !this.acesso
+                this.viewpessoa = false
+                this.msg_login = ''
+            }
+            else if (this.login == 'icnvararuama' & this.senha != '123456') {
+                this.msg_login = 'Senha Incorreta... Tente outra vez!'
+            }
+            else if (this.login != 'icnvararuama' & this.senha == '123456') {
+                this.msg_login = 'Login Incorreto... Tente outra vez!'
+            }
+            else {
+                this.msg_login = 'Não foi possível realizar o Login.'
+            }
+
         },
         obterImagem(id) {
 
@@ -84,6 +102,7 @@ export default {
                     <h2 class="titulo">Efetue o Login:</h2>
                 </div>
 
+                <h2 class="msg_erro" v-show="msg_login">{{ this.msg_login }}</h2>
 
 
                 <div class="dadospessoais">
@@ -104,7 +123,7 @@ export default {
 
 
             <ul v-show="acesso == true && viewpessoa == false">
-                <div class="titulo">
+                <div class="titulo2">
                     <p>Pessoas Cadastradas</p>
                 </div>
 
@@ -140,61 +159,104 @@ export default {
             </ul>
 
             <div class="pessoa" v-show="viewpessoa == true">
-                
+
                 <div class="image">
-                    <p class="carregando" v-show="imagem == ''">Carregando Imagem...</p>
+                    
                     <img class="foto" :src="imagem" alt="">
+                    <p class="carregando" v-show="imagem == ''">Carregando Imagem...</p>
                 </div>
-                
+
                 <div class="subtitulo">
                     Dados Pessoais
                 </div>
+                <div>
+                    <div class="text">
+                        <h4 class="dados_pessoa">
+                            Nome:
+                        </h4>
+                        <p>
+                            {{ item_pessoa.nome }}
+                        </p>
+                    </div>
 
-                <div class="text">
-                    Nome: {{ item_pessoa.nome }}
+                    <div class="text">
+                        <h4 class="dados_pessoa">
+                            Data de Nascimento:
+                        </h4>
+                        <p>
+                            {{ item_pessoa.data_nascimento }}
+                        </p>
+                    </div>
+                    <div class="text">
+                        <h4 class="dados_pessoa">
+                            Idade:
+                        </h4>
+                        <p>
+                            {{ item_pessoa.idade }}
+                        </p>
+                        <h4 class="dados_pessoa">
+                            Sexo:
+                        </h4>
+                        <p>
+                            {{ item_pessoa.sexo }}
+                        </p>
+                    </div>
+
+
+                    <div class="text">
+                        <h4 class="dados_pessoa">
+                            Email:
+                        </h4>
+                        <p>
+                            {{ item_pessoa.email }}
+                        </p>
+                    </div>
+
+                    <div class="text">
+                        <h4 class="dados_pessoa">
+                            Telefone:
+                        </h4>
+                        <p>
+                            {{ item_pessoa.telefone }}
+                        </p>
+                    </div>
+
+                    <div class="status">
+                        <h4>Membro:</h4>
+                        <div v-show="item_pessoa.status == true">Ativo</div>
+                        <div v-show="item_pessoa.status == false">Inativo</div>
+                    </div>
                 </div>
-                <div class="text">
-                    Data de Nascimento: {{ item_pessoa.data_nascimento }}
-                </div>
-                <div class="text">
-                    Idade: {{ item_pessoa.idade }} sexo: {{ item_pessoa.sexo }}
-                </div>
-                <div class="text">
-                    Email: {{ item_pessoa.email }}
-                </div>
-                <div class="text">
-                    Telefone: {{ item_pessoa.telefone }}
-                </div>
-                <div class="status">
-                    <div v-show="item_pessoa.status == true">Membro - Ativo</div>
-                    <div v-show="item_pessoa.status == false">Membro - Inativo</div>
-                </div>
-                
-                
+
                 <div class="subtitulo">
                     Endereço
                 </div>
+                <div>
+                    <div class="text">
+                        <h4>Estado:</h4> {{ item_pessoa.estado }}                        
+                    </div>
+                    <div class="text">
+                        <h4>Cidade:</h4> {{ item_pessoa.cidade }}                    
+                    </div>
+                    <div class="text">
+                        <h4>Bairro:</h4> {{ item_pessoa.bairro }} 
+                    </div>
+                    <div class="text">
+                        <h4>Logradouro:</h4> {{ item_pessoa.logradouro }}                   
+                     </div>
+                    <div class="text">
+                        <h4> Numero:</h4> {{ item_pessoa.numero }}
+                    </div>
+                    <div class="text">
+                        <h4>Complemento:</h4> {{ item_pessoa.complemento }}
+                    </div>
+                </div>
 
-                <div class="text">
-                    Estado: {{ item_pessoa.estado }}
-                    Cidade: {{ item_pessoa.cidade }}
-                </div>
-                <div class="text">
-                    Bairro: {{ item_pessoa.bairro }} Logradouro: {{ item_pessoa.Logradouro }}
-                </div>
-                <div class="text">
-                    Numero: {{ item_pessoa.numero }}
-                </div>
-                <div class="text">
-                    Complemento: {{ item_pessoa.complemento }}
-                </div>
-                
 
-                
-                    
+
             </div>
 
-            <button class="sair" @click="efetuarLogin" v-show="acesso == true && viewpessoa == false">Sair</button>
+            <button class="sair" @click="sair" v-show="acesso == true && viewpessoa == false">Sair</button>
             <button class="sair" @click="acesso = true, viewpessoa = false, imagem = ''"
                 v-show="viewpessoa == true">Voltar</button>
 
@@ -268,15 +330,32 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 10px;
-        font-size: 1.3rem;
+        padding: 30px;
+        font-size: 1.5rem;
         font-weight: bold;
+        color: #b8fddb;
+        letter-spacing: 3px;
+    }
+
+    .titulo2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #000d46;
+        letter-spacing: 3px;
+    }
+
+    label {
+        color: #ffffff;
     }
 
     .entrar {
         padding: 15px;
         width: 65%;
-        font-size: 15px;
+        font-size: 1rem;
         letter-spacing: 2px;
         border-radius: 10px;
         border: none;
@@ -291,7 +370,7 @@ export default {
     .sair {
         padding: 15px;
         width: 80%;
-        font-size: 15px;
+        font-size: 1rem;
         letter-spacing: 2px;
         border-radius: 10px;
         border: none;
@@ -381,53 +460,80 @@ export default {
 
     .rodape {}
 
-    .pessoa{
+    .pessoa {
         width: 80%;
-        height: 900px;
+        height: 720px;
         background-color: #b8fddb;
-        padding: 10px; 
-        border-radius: 10px;   
+        padding: 10px;
+        border-radius: 10px;
         box-shadow: 0px 0px 10px 0px;
         display: flex;
         flex-direction: column;
+        align-items: baseline;
+        justify-content: center;
+    }
+
+
+    .text {
+        font-size: 0.8rem;
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        letter-spacing: 1px;
+    }
+
+    .status {
+        font-size: 1rem;
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
         align-items: center;
-        justify-content: center;    
+        gap: 20px;
     }
 
-    
-    .text{
-        font-size: 1.4rem;
-        padding: 5px;
+    .subtitulo {
+        width: 93%;
+        font-size: 1.2rem;
+        padding: 3%;
+        margin: 3%;
+        letter-spacing: 5px;
+        border: 2px solid #8cdabc;
+        border-radius: 8px;
+        color: #211355;
+        text-align: center;
     }
 
-    .status{
-        font-size: 1.4rem;
-        padding: 5px;
-    }
-
-    .subtitulo{
-        font-size: 1.8rem;
-        padding: 25px;
-        letter-spacing: 2px;
-    }
-
-    .image{
+    .image {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;        
-    }    
-    .foto{
-        width: 200px;
+        justify-content: center;
+    }
+
+    .foto {
+        height: 200px;
         border-radius: 20px;
     }
-    .carregando{
+
+    .carregando {
         background-color: #000000;
         color: #f3f3f3;
-        font-size: 1.5rem ;
+        font-size: 1.5rem;
         padding: 10px;
         text-align: center;
         border-radius: 10px;
+    }
+
+    .msg_erro {
+        margin: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        background-color: #b8fddb;
+        color: brown;
+        border-radius: 10px;
+        font-size: 1rem;
     }
 }
 

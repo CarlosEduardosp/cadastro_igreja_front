@@ -7,10 +7,9 @@
       <Header></Header>
 
       <div>
-        <h2 class="titulo">Formulário para cadastro</h2>
-      </div>
+        <h2 class="titulo">Formulário para cadastro</h2>     </div>
 
-      {{ resposta_requisicao }}
+      
 
       <div class="dadospessoais">
 
@@ -73,6 +72,8 @@
         <input class="input" v-model="complemento" type="text" id="complemento" required>
 
       </div>
+      
+      <h4 class="resposta" v-show="resposta_requisicao">{{ resposta_requisicao }}</h4>
 
       <button type="submit" @click="enviar">CADASTRAR</button>
 
@@ -140,11 +141,12 @@ export default {
 
         // realizando a leitura da promisse, com o '.then';
         .then(responsePost => {
-          
+          console.log(responsePost)
           if (responsePost.success == false) {
 
             // retorna alguma mensagem de erro na validação do backend.
-            this.resposta_requisicao = responsePost.message;
+            this.resposta_requisicao = responsePost.data;
+            
           }
           else {
             // retorna uma resposta de confirmação.
@@ -227,9 +229,10 @@ export default {
 </script>
   
 <style scoped>
-@media (max-width: 720px) {
+@media (max-width: 720px) {  
+
   .titulo {
-    padding: 20px 0px;
+    padding: 15px 0px;
   }
 
   form {
@@ -245,10 +248,10 @@ export default {
     justify-content: center;
     background-color: #fcfcfc;
     width: 70%;
-    height: 50%;
+    height: 40%;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
   }
 
   .end {
@@ -266,7 +269,7 @@ export default {
   .sub {
     width: 80%;
     background-color: rgb(198, 240, 247);
-    padding: 10px;
+    padding: 8px;
     text-align: center;
     border-radius: 10px;
     margin: 10px;
@@ -300,7 +303,7 @@ export default {
     color: #ffffff;
     transition: 0.5s;
     font-weight: bold;
-    margin-top: 5%;
+    margin-top: 2%;
     margin-bottom: 10%;
   }
 
@@ -317,6 +320,13 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 5px;
+  }
+  .resposta{
+    padding: 2%;
+    margin: 1%;
+    background-color: aquamarine;
+    border-radius: 10px;
+    color: #0055a5;
   }
 }
 
