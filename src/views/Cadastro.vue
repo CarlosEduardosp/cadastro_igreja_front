@@ -149,8 +149,7 @@ export default {
           else {
             // retorna uma resposta de confirmação.
             this.resposta_requisicao = responsePost.message;
-
-            console.log(responsePost.data.id)
+            
             // chamada da função que realiza o post da imagem
             const respostaimagem = enviarParaAPI(this.imagem, this.nome, responsePost.data.id)
 
@@ -175,7 +174,7 @@ export default {
               this.logradouro = '',
               this.numero = '',
               this.status = '',
-              this.complemento
+              this.complemento = ''
           }
         })
 

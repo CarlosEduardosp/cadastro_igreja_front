@@ -1,3 +1,72 @@
+<script>
+import Header from '../components/header.vue'
+import { ConectarApi } from '../APIconection/api_connection';
+import { obterImagemDaAPI } from '../APIconection/getimagemid'
+
+export default {
+    name: 'Pessoas',
+
+    components: {
+        Header
+    },
+    data() {
+        return {
+            dados_api: [],
+            acesso: false,
+            viewpessoa: false,
+            login: '',
+            senha: '',
+            login_pessoas: 'icnvararuama',
+            login_senha: '13709852',
+            item_pessoa: '',
+            imagem: ''
+        }
+    },
+    methods: {
+
+        async iniciar() {
+
+            // Realiza a primeira requisição
+            const data = await ConectarApi();
+
+
+            if (data.status_code == 200) {
+                this.dados_api = data.body
+            }
+
+        },
+        abrirpessoa(item) {
+            this.item_pessoa = item
+        },
+
+        efetuarLogin() {
+            this.acesso = !this.acesso
+            this.login = ''
+            this.senha = ''
+            this.viewpessoa = false
+        },
+        obterImagem(id) {
+
+            // Use a função e manipule a URL da imagem como quiser
+            obterImagemDaAPI(id)
+                .then(url => {
+                    this.imagem = url;
+                    // Faça o que precisar com a URL da imagem, como exibir em uma tag <img>
+                })
+                .catch(error => {
+                    console.error('Erro ao obter imagem:', error);
+                });
+
+        },
+
+    },
+    mounted() {
+        this.iniciar();
+    }
+}
+
+</script>
+
 <template>
     <div class="corpo">
         <div>
@@ -71,13 +140,63 @@
             </ul>
 
             <div class="pessoa" v-show="viewpessoa == true">
-                {{ item_pessoa }}                
-                <img :src="imagem" alt="">
+                
+                <div class="image">
+                    <p class="carregando" v-show="imagem == ''">Carregando Imagem...</p>
+                    <img class="foto" :src="imagem" alt="">
+                </div>
+                
+                <div class="subtitulo">
+                    Dados Pessoais
+                </div>
+
+                <div class="text">
+                    Nome: {{ item_pessoa.nome }}
+                </div>
+                <div class="text">
+                    Data de Nascimento: {{ item_pessoa.data_nascimento }}
+                </div>
+                <div class="text">
+                    Idade: {{ item_pessoa.idade }} sexo: {{ item_pessoa.sexo }}
+                </div>
+                <div class="text">
+                    Email: {{ item_pessoa.email }}
+                </div>
+                <div class="text">
+                    Telefone: {{ item_pessoa.telefone }}
+                </div>
+                <div class="status">
+                    <div v-show="item_pessoa.status == true">Membro - Ativo</div>
+                    <div v-show="item_pessoa.status == false">Membro - Inativo</div>
+                </div>
+                
+                
+                <div class="subtitulo">
+                    Endereço
+                </div>
+
+                <div class="text">
+                    Estado: {{ item_pessoa.estado }}
+                    Cidade: {{ item_pessoa.cidade }}
+                </div>
+                <div class="text">
+                    Bairro: {{ item_pessoa.bairro }} Logradouro: {{ item_pessoa.Logradouro }}
+                </div>
+                <div class="text">
+                    Numero: {{ item_pessoa.numero }}
+                </div>
+                <div class="text">
+                    Complemento: {{ item_pessoa.complemento }}
+                </div>
+                
+
+                
+                    
             </div>
 
             <button class="sair" @click="efetuarLogin" v-show="acesso == true && viewpessoa == false">Sair</button>
             <button class="sair" @click="acesso = true, viewpessoa = false, imagem = ''"
-                v-show="viewpessoa == true">Voltar</button>Carregando Imagem...
+                v-show="viewpessoa == true">Voltar</button>
 
             <footer class="rodape">
                 <h1>Rodapé</h1>
@@ -86,76 +205,6 @@
 
     </div>
 </template>
-
-<script>
-import Header from '../components/header.vue'
-import { ConectarApi } from '../APIconection/api_connection';
-import { obterImagemDaAPI } from '../APIconection/getimagemid'
-
-export default {
-    name: 'Pessoas',
-
-    components: {
-        Header
-    },
-    data() {
-        return {
-            dados_api: [],
-            acesso: false,
-            viewpessoa: false,
-            login: '',
-            senha: '',
-            login_pessoas: 'icnvararuama',
-            login_senha: '13709852',
-            item_pessoa: '',
-            imagem: ''
-        }
-    },
-    methods: {
-
-        async iniciar() {
-
-            // Realiza a primeira requisição
-            const data = await ConectarApi();
-
-
-            if (data.status_code == 200) {
-                this.dados_api = data.body
-            }
-
-        },
-        abrirpessoa(item) {
-            this.item_pessoa = item
-        },
-
-        efetuarLogin() {
-            this.acesso = !this.acesso
-            this.login = ''
-            this.senha = ''
-            this.viewpessoa = false
-        },
-        obterImagem(id) {
-
-            // Use a função e manipule a URL da imagem como quiser
-            obterImagemDaAPI(id)
-                .then(url => {
-                    this.imagem = url;
-                    // Faça o que precisar com a URL da imagem, como exibir em uma tag <img>
-                })
-                .catch(error => {
-                    console.error('Erro ao obter imagem:', error);
-                });
-
-        },
-
-    },
-    mounted() {
-        this.iniciar();
-    }
-}
-
-</script>
-
 <style scoped>
 @media (max-width: 720px) {
 
@@ -331,6 +380,55 @@ export default {
     }
 
     .rodape {}
+
+    .pessoa{
+        width: 80%;
+        height: 900px;
+        background-color: #b8fddb;
+        padding: 10px; 
+        border-radius: 10px;   
+        box-shadow: 0px 0px 10px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;    
+    }
+
+    
+    .text{
+        font-size: 1.4rem;
+        padding: 5px;
+    }
+
+    .status{
+        font-size: 1.4rem;
+        padding: 5px;
+    }
+
+    .subtitulo{
+        font-size: 1.8rem;
+        padding: 25px;
+        letter-spacing: 2px;
+    }
+
+    .image{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;        
+    }    
+    .foto{
+        width: 200px;
+        border-radius: 20px;
+    }
+    .carregando{
+        background-color: #000000;
+        color: #f3f3f3;
+        font-size: 1.5rem ;
+        padding: 10px;
+        text-align: center;
+        border-radius: 10px;
+    }
 }
 
 @media (min-width: 721px) {
