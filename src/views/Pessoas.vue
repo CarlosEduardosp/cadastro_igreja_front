@@ -222,7 +222,7 @@ export default {
                     </div>
 
                     <div class="status">
-                        <h4>Membro:</h4>
+                        <h4>Status:</h4>
                         <div v-show="item_pessoa.status == true">Ativo</div>
                         <div v-show="item_pessoa.status == false">Inativo</div>
                     </div>
@@ -484,7 +484,7 @@ export default {
     }
 
     .status {
-        font-size: 1rem;
+        font-size: 0.8rem;
         padding: 5px;
         display: flex;
         flex-direction: row;

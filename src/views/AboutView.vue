@@ -2,14 +2,30 @@
   <div class="section">
     <Header></Header>
     <div class="main">
-      conteudo sobre
+
+      <div class="sobre">
+
+        <h2>ICNV Araruama</h2>
+
+        <p class="texto">
+          Em dezenove de novembro de 2011, nascia a Igreja Cristã Nova Vida em Araruama, como igreja filha da ICNV
+          Mesquita-RJ, na liderança do pastor Jorge Garcia Duarte. Eu e minha esposa Ana Paula fomos enviados pelo Senhor,
+          juntamente com nossa filha Emanuelly, de apenas oito meses de idade para uma cidade desconhecida por nós, porém
+          já preparada por Deus para que uma árvore forte e frondosa fosse plantada aqui nesta terra, um lugar seguro para
+          todos aqueles que buscam um lar espiritual, um lugar para edificar sua família.
+          E como dizia nosso saudoso fundador, bispo Roberto McAlister:
+                    
+        </p>
+        <p class="frase">“E que Deus o abençoe, rica e abundantemente!!”</p>
+        <p class="assinatura">Pr Benaldo Medeiros.</p>
+      </div>
+
     </div>
-      <footer>
-        <rodape></rodape>
-      </footer>
-    
+    <footer>
+      <rodape></rodape>
+    </footer>
+
   </div>
-  
 </template>
 
 <script>
@@ -31,11 +47,59 @@ export default {
 @media (max-width: 720px) {
   .section {
     width: 100%;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-   
+
+  }
+
+  .main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .sobre {
+    width: 70%;
+    height: 700px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .texto{
+    padding: 1.5rem;
+    letter-spacing: 1px;
+    text-align:justify;
+    line-height: 1.3rem;
+  }
+  .frase{
+    padding: 0rem 1.5rem;
+    letter-spacing: 1px;
+    text-align:center;
+    line-height: 1.3rem;
+    font-size: 1.3rem;
+  }
+
+  .assinatura{
+    padding: 1.2rem 1.5rem;
+    letter-spacing: 1px;
+    text-align:left;
+    line-height: 1.3rem;
+    font-size: 1.2rem;
+  }
+  h2{
+    text-align: center;
+    letter-spacing: 1px;
+    color: #000000;
+    font-size: 1.6rem;
   }
 }
 
@@ -56,5 +120,4 @@ export default {
     background-repeat: no-repeat;
   }
 
-}
-</style>
+}</style>

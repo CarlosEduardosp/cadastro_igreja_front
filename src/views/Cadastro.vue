@@ -7,7 +7,7 @@
       <Header></Header>
 
       <div>
-        <h2 class="titulo">Formulário para cadastro</h2>     </div>
+        <h2 class="titulo">Formulário para Cadastro</h2>     </div>
 
       
 
@@ -268,7 +268,7 @@ export default {
 
   .sub {
     width: 80%;
-    background-color: rgb(198, 240, 247);
+    background-color: #c6f0f7;
     padding: 8px;
     text-align: center;
     border-radius: 10px;
@@ -327,6 +327,15 @@ export default {
     background-color: aquamarine;
     border-radius: 10px;
     color: #0055a5;
+  }
+  .titulo{
+    padding: 10px;
+    margin: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    color: #f3f3f3;
+    background-color: #263a94;
   }
 }
 

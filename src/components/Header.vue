@@ -1,56 +1,62 @@
 <script>
 export default {
-    name: 'logoHeader'
+  name: 'logoHeader'
 }
 </script>
 
 <template>
+  <header>
+    <img src="../assets/imagens/logo-portal-nova-vida.png" alt="">
+  </header>
+
   <div class="inicio">
-      <header>
-        <h1 class="titulo">Igreja Cristã Nova Vida</h1>
-        <h2 class="subtitulo">Araruama</h2>
-      </header>
-      
-      <nav>
-        
-        <ul>
-          <li>
-            <RouterLink to="/">HOME</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/about">HISTÓRIA</RouterLink>
-          </li>
-          <li>
-            <a href="/contato">CONTATO</a>
-          </li>
-          <li>
-            <a href="/cadastro">CADASTRO</a>
-          </li>
-          <li>
-            <a href="/pessoas">ADM</a>
-          </li>
-        </ul>
-        
-      </nav>
-    </div>
-    
+
+    <nav>
+
+      <ul>
+        <li>
+          <RouterLink to="/">HOME</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/about">HISTÓRIA</RouterLink>
+        </li>
+        <li>
+          <a href="/contato">CONTATO</a>
+        </li>
+        <li>
+          <a href="/cadastro">CADASTRO</a>
+        </li>
+        <li>
+          <a href="/pessoas">ADM</a>
+        </li>
+      </ul>
+
+    </nav>
+  </div>
 </template>
 
 
 <style scoped>
-.titulo{
+.titulo {
   font-size: 1.5rem;
   padding: 10px;
 }
 
-.subtitulo{
+.subtitulo {
   font-size: 1.3rem;
 }
-header{
+
+header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #0a428be8;
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  box-shadow: #f3f3f3 0px 0px 2px 1px;
 }
+
 .inicio {
   display: flex;
   flex-direction: column;
@@ -74,5 +80,7 @@ ul li a {
   color: #f3f3f3;
 }
 
-
+img {
+  width: 80%;
+}
 </style>

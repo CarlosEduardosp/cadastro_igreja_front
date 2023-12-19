@@ -1,5 +1,7 @@
 "<template>
+    
     <div class="section">
+        <hr>
         <div class="main">
             icnv@araruama
         </div>
@@ -12,6 +14,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+hr{
+    width: 100%;
+    margin-bottom: 5px;
+}
+.section{
+    margin-top: 20px;
+}
 </style>"
