@@ -18,14 +18,15 @@
         </p>
         <p class="frase">“E que Deus o abençoe, rica e abundantemente!!”</p>
         <p class="assinatura">Pr Benaldo Medeiros.</p>
-      </div>
-
-    </div>
-    <footer>
+        
+      </div>      
       <rodape></rodape>
-    </footer>
-
+    </div>
+    
+ 
+    
   </div>
+  
 </template>
 
 <script>
@@ -55,17 +56,21 @@ export default {
 
   .main {
     width: 100%;
-    height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
   }
 
+  .rodape{
+    width: 80%;
+    height: auto;   
+  }
   .sobre {
-    width: 70%;
-    height: 700px;
-    background-color: #f8f8f8;
+    width: 80%;
+    height: 750px;
+    background-color: #0a428b81;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px;
     display: flex;
@@ -79,6 +84,7 @@ export default {
     letter-spacing: 1px;
     text-align:justify;
     line-height: 1.3rem;
+    color:#e0e0e0;
   }
   .frase{
     padding: 0rem 1.5rem;
@@ -86,6 +92,7 @@ export default {
     text-align:center;
     line-height: 1.3rem;
     font-size: 1.3rem;
+    color:#fff;
   }
 
   .assinatura{
@@ -94,11 +101,12 @@ export default {
     text-align:left;
     line-height: 1.3rem;
     font-size: 1.2rem;
+    color:#fff;
   }
   h2{
     text-align: center;
     letter-spacing: 1px;
-    color: #000000;
+    color: #ffffff;
     font-size: 1.6rem;
   }
 }

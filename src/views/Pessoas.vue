@@ -2,12 +2,14 @@
 import Header from '../components/header.vue'
 import { ConectarApi } from '../APIconection/api_connection';
 import { obterImagemDaAPI } from '../APIconection/getimagemid'
+import rodape from '../components/rodape.vue';
 
 export default {
     name: 'Pessoas',
 
     components: {
-        Header
+        Header,
+        rodape
     },
     data() {
         return {
@@ -261,17 +263,16 @@ export default {
                 v-show="viewpessoa == true">Voltar</button>
 
             <footer class="rodape">
-                <h1>Rodapé</h1>
+                <rodape></rodape>
             </footer>
         </div>
-
     </div>
 </template>
 <style scoped>
 @media (max-width: 720px) {
 
     .corpo {
-        height: 100vh;
+        height: 100%;
     }
 
     form {
@@ -312,6 +313,7 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 100%;
     }
 
     .input {
@@ -384,6 +386,7 @@ export default {
 
     ul {
         width: 80%;
+        height: 65vh;
         background-color: #f3f3f3;
         border-radius: 10px;
         margin-top: 20px;

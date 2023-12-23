@@ -15,7 +15,7 @@ export default {
 
       <ul>
         <li>
-          <RouterLink to="/">HOME</RouterLink>
+          <RouterLink to="/">INÍCIO</RouterLink>
         </li>
         <li>
           <RouterLink to="/about">HISTÓRIA</RouterLink>
@@ -50,7 +50,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #0a428be8;
+  background-color: #000000e8;
   padding: 20px;
   width: 100%;
   margin-bottom: 10px;

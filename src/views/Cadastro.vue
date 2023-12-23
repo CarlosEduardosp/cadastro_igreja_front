@@ -7,7 +7,7 @@
       <Header></Header>
 
       <div>
-        <h2 class="titulo">Formulário para Cadastro</h2>     </div>
+        <h2 class="titulo">Tela de Cadastro</h2>     </div>
 
       
 
@@ -77,7 +77,10 @@
 
       <button type="submit" @click="enviar">CADASTRAR</button>
 
+      <rodape></rodape>
     </form>
+    
+    
   </div>
 </template>
   
@@ -87,13 +90,14 @@ import { ConectarApi } from '../APIconection/api_connection';
 import { fazerRequisicaoPOST } from '../APIconection/api_connection';
 import { fazerRequisicaoImagemPOST } from '../APIconection/api_connection'
 import { enviarParaAPI } from '../APIconection/postImagem'
-
+import rodape from '../components/rodape.vue';
 
 export default {
   name: 'Cadastro',
 
   components: {
     Header,
+    rodape
   },
   data() {
     return {
@@ -230,7 +234,7 @@ export default {
   
 <style scoped>
 @media (max-width: 720px) {  
-
+  
   .titulo {
     padding: 15px 0px;
   }
@@ -304,7 +308,6 @@ export default {
     transition: 0.5s;
     font-weight: bold;
     margin-top: 2%;
-    margin-bottom: 10%;
   }
 
   button:hover {
@@ -337,6 +340,7 @@ export default {
     color: #f3f3f3;
     background-color: #263a94;
   }
+ 
 }
 
 @media (min-width: 721px) {
