@@ -20,70 +20,69 @@ export default {
             senha: '',
             item_pessoa: '',
             imagem: '',
-            msg_login: ''
-        }
+            msg_login: '',
+        };
     },
     methods: {
-
         async iniciar() {
-
-            // Realiza a primeira requisição
-            const data = await ConectarApi();
-
-
-            if (data.status_code == 200) {
-                this.dados_api = data.body
+            try {
+                // Realiza a primeira requisição
+                const data = await ConectarApi();
+                        
+                if (data.status_code == 200) {
+                    this.dados_api = data.body;
+                }
+            } catch (error) {
+                console.error('Erro ao iniciar:', error);
             }
-
         },
+
         abrirpessoa(item) {
-            this.item_pessoa = item
+            this.item_pessoa = item;
         },
 
         sair() {
-
-            this.acesso = false
-            this.login = ''
-            this.senha = ''
-            this.msg_login = ''
+            this.acesso = false;
+            this.login = '';
+            this.senha = '';
+            this.msg_login = '';
         },
 
         efetuarLogin() {
-            if (this.login == 'icnvararuama' & this.senha == '123456') {
-                this.acesso = !this.acesso
-                this.viewpessoa = false
-                this.msg_login = ''
-            }
-            else if (this.login == 'icnvararuama' & this.senha != '123456') {
-                this.msg_login = 'Senha Incorreta... Tente outra vez!'
-            }
-            else if (this.login != 'icnvararuama' & this.senha == '123456') {
-                this.msg_login = 'Login Incorreto... Tente outra vez!'
-            }
-            else {
-                this.msg_login = 'Não foi possível realizar o Login.'
-            }
+            const usuarioEsperado = 'icnvararuama';
+            const senhaEsperada = '123456';
 
-        },
-        obterImagem(id) {
-
-            // Use a função e manipule a URL da imagem como quiser
-            obterImagemDaAPI(id)
-                .then(url => {
-                    this.imagem = url;
-                    // Faça o que precisar com a URL da imagem, como exibir em uma tag <img>
-                })
-                .catch(error => {
-                    console.error('Erro ao obter imagem:', error);
-                });
-
+            if (this.login === usuarioEsperado && this.senha === senhaEsperada) {
+                this.acesso = !this.acesso;
+                this.viewpessoa = false;
+                this.msg_login = '';
+            } else if (this.login === usuarioEsperado && this.senha !== senhaEsperada) {
+                this.msg_login = 'Senha Incorreta... Tente outra vez!';
+            } else if (this.login !== usuarioEsperado && this.senha === senhaEsperada) {
+                this.msg_login = 'Login Incorreto... Tente outra vez!';
+            } else {
+                this.msg_login = 'Não foi possível realizar o Login.';
+            }
         },
 
+        async obterImagem(id) {
+            try {
+                // Use a função e manipule a URL da imagem como quiser
+                const url = await obterImagemDaAPI(id);
+                this.imagem = url;
+                // Faça o que precisar com a URL da imagem, como exibir em uma tag <img>
+            } catch (error) {
+                console.error('Erro ao obter imagem:', error);
+            }
+        },
+        
     },
     mounted() {
         this.iniciar();
-    }
-}
+    },
+    
+};
+
 
 </script>
 
@@ -93,9 +92,6 @@ export default {
             <Header></Header>
         </div>
         <div class="section">
-
-
-
 
             <form @submit.prevent="efetuarLogin" v-show="acesso == false">
 
@@ -148,13 +144,11 @@ export default {
 
                 <li v-for="item in dados_api" :key="item.id"
                     @click="abrirpessoa(item), viewpessoa = true, obterImagem(item.id)">
-
                     <div class="card">
                         <div class="id">{{ item.id }}</div>
                         <div class="nome">{{ item.nome }}</div>
                         <div class="idade">{{ item.idade }} </div>
                         <div class="telefone">{{ item.telefone }}</div>
-
                     </div>
                 </li>
 
@@ -163,7 +157,7 @@ export default {
             <div class="pessoa" v-show="viewpessoa == true">
 
                 <div class="image">
-                    
+
                     <img class="foto" :src="imagem" alt="">
                     <p class="carregando" v-show="imagem == ''">Carregando Imagem...</p>
                 </div>
@@ -235,17 +229,17 @@ export default {
                 </div>
                 <div>
                     <div class="text">
-                        <h4>Estado:</h4> {{ item_pessoa.estado }}                        
+                        <h4>Estado:</h4> {{ item_pessoa.estado }}
                     </div>
                     <div class="text">
-                        <h4>Cidade:</h4> {{ item_pessoa.cidade }}                    
+                        <h4>Cidade:</h4> {{ item_pessoa.cidade }}
                     </div>
                     <div class="text">
-                        <h4>Bairro:</h4> {{ item_pessoa.bairro }} 
+                        <h4>Bairro:</h4> {{ item_pessoa.bairro }}
                     </div>
                     <div class="text">
-                        <h4>Logradouro:</h4> {{ item_pessoa.logradouro }}                   
-                     </div>
+                        <h4>Logradouro:</h4> {{ item_pessoa.logradouro }}
+                    </div>
                     <div class="text">
                         <h4> Numero:</h4> {{ item_pessoa.numero }}
                     </div>
@@ -335,7 +329,7 @@ export default {
         padding: 30px;
         font-size: 1.5rem;
         font-weight: bold;
-        color: #b8fddb;
+        color: #ffffff;
         letter-spacing: 3px;
     }
 

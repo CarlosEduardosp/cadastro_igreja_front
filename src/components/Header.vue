@@ -23,9 +23,7 @@ export default {
         <li>
           <a href="/contato">CONTATO</a>
         </li>
-        <li>
-          <a href="/cadastro">CADASTRO</a>
-        </li>
+        
         <li>
           <a href="/pessoas">ADM</a>
         </li>

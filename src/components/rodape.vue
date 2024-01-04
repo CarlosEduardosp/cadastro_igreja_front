@@ -16,7 +16,7 @@
             <a href="https://www.youtube.com/c/ICNVAraruama">
                 <img class="icone"  src="../assets/icones/youtube.png" alt="">
             </a>
-                <a href="#">
+                <a href="https://wa.me/message/LCAFCFOALQXGC1?src=qr">
                     <img class="icone" src="../assets/icones/whatsapp_1384023.png" alt="">
                     </a>
                 </div>

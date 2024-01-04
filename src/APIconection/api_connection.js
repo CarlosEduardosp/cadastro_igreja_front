@@ -3,7 +3,8 @@ import axios from 'axios';
 
 export async function ConectarApi() {
   // URL da API fictícia
-  const apiUrl = 'https://backend-cadigreja.onrender.com/select_todos';
+  //const apiUrl = 'https://backend-cadigreja.onrender.com/select_todos';
+  const apiUrl = 'http://34.133.180.161/select_todos';
   //const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   // Fazendo uma solicitação GET usando Axios e retornando a Promise
@@ -15,7 +16,6 @@ export async function ConectarApi() {
     })
     .catch(error => {
       // Trate os erros de solicitação ou resposta
-      console.error(error);
       throw error; // Lança o erro novamente para tratamento posterior, se necessário
     });
 
@@ -23,7 +23,8 @@ export async function ConectarApi() {
 
 export async function fazerRequisicaoPOST(dados) {
   // URL da API fictícia
-  const apiUrl = 'https://backend-cadigreja.onrender.com/inserir';
+  //const apiUrl = 'https://backend-cadigreja.onrender.com/inserir';
+  const apiUrl = 'http://34.133.180.161/inserir';
   //const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
   // Fazendo uma solicitação GET usando Axios e retornando a Promise
@@ -48,7 +49,8 @@ export async function fazerRequisicaoPOST(dados) {
 
 export async function fazerRequisicaoImagemPOST(nome, id_pessoa, imagem) {
   // URL da API fictícia
-  const apiUrl = 'https://backend-cadigreja.onrender.com/inserir_imagem';
+  //const apiUrl = 'https://backend-cadigreja.onrender.com/inserir_imagem';
+  const apiUrl = 'http://34.133.180.161/inserir_imagem';
  
 
   // Fazendo uma solicitação GET usando Axios e retornando a Promise
@@ -69,4 +71,5 @@ export async function fazerRequisicaoImagemPOST(nome, id_pessoa, imagem) {
       throw error; // Lança o erro novamente para tratamento posterior, se necessário
     });
 }
+
 

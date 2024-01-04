@@ -1,6 +1,7 @@
 export function obterImagemDaAPI(id) {
     // Substitua a URL abaixo pela URL real da sua API
-    const urlDaAPI = 'https://backend-cadigreja.onrender.com/select_imagem_id?id_pessoa=' + id;
+    //const urlDaAPI = 'https://backend-cadigreja.onrender.com/select_imagem_id?id_pessoa=' + id;
+    const urlDaAPI = 'http://34.133.180.161/select_imagem_id?id_pessoa=' + id;
 
     return fetch(urlDaAPI)
         .then(response => {

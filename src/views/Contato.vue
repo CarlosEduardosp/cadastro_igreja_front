@@ -12,24 +12,35 @@
                             <p class="sub">Email: </p>
                             <p class="atributo">Icnv.araruama@gmail.com</p>
                         </li>
-                        <li>
-                            <p class="sub">WhatsApp: </p>
-                            <p class="atributo">(22)99716-6769</p>
-                        </li>
                         <p class="titulo">Mídias Sociais</p>
-                        <li>
-                            <p class="sub">Instagram: </p>
-                            <a href="https://www.instagram.com/icnv.araruama/" class="atributo">Acessar</a>
+                        <div class="icones">
+                                                    
+                        <li>                            
+                            <a href="https://wa.me/message/LCAFCFOALQXGC1?src=qr" class="atributo">
+                                <img src="../assets/icones/whatsapp_1384023.png" alt="" class="icone">
+                            </a>
                         </li>
+                        
                         <li>
-                            <p class="sub">Facebook: </p>
-                            <a href="https://www.facebook.com/IcnvAraruamarj/?locale=pt_BR" class="atributo">Acessar</a>
+                            <a href="https://www.instagram.com/icnv.araruama/" class="atributo">
+                                <img src="../assets/icones/instagram.png" alt="" class="icone">
+                            </a>
                         </li>
-                        <p class="titulo">Canal</p>
+                        </div>
+                        
+                        <div class="icones">
                         <li>
-                            <p class="sub">YouTube: </p>
-                            <a href="https://www.youtube.com/c/ICNVAraruama" class="atributo">Acessar</a>
+                            <a href="https://www.facebook.com/IcnvAraruamarj/?locale=pt_BR" class="atributo">
+                                <img src="../assets/icones/facebook.png" alt="" class="icone">
+                            </a>
                         </li>
+
+                        <li>
+                            <a href="https://www.youtube.com/c/ICNVAraruama" class="atributo">
+                                <img src="../assets/icones/youtube.png" alt="" class="icone">
+                            </a>
+                        </li>
+                        </div>
                     </ul>
                        
             </div>
@@ -113,11 +124,11 @@ export default {
         font-size: 1.5rem;
     }
     .atributo{
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
     .titulo{
         text-align: center;
-        font-size: 1.2rem;
+        font-size: 2rem;
         color: #65fff2;
         padding-top: 40px;
         padding-bottom: 20px;
@@ -126,10 +137,10 @@ export default {
         list-style-type: none;
         text-decoration: none;
         font-size: 1.2rem;
-        color: #040280;
-        background-color: #00ffea;
+        color: #000000;
+        -color: #fffb00;
         border-radius: 8px;
-        padding: 5px;
+        padding: 8px;
     }
     .rodape {
     width: 100%;
@@ -138,6 +149,20 @@ export default {
     box-shadow: none;
     gap: 0px;   
     border-radius: 0px;   
+
+  }
+  .icone{
+    background-color: #fcfcfc;
+    width: 100px;
+    border-radius: 20px;
+    padding: 5px;
+  }
+  .icones{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 
   }
 }

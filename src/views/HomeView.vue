@@ -18,7 +18,8 @@ export default {
   <div class="section">
 
 
-    <Header></Header>
+    <Header></Header>    
+      
     <div class="inicio">
       <p class="titulo_anuncio">Conheça Nossa Canção</p>
       <p class="sub_anuncio"> MINHA FORTALEZA</p>
@@ -27,12 +28,22 @@ export default {
         </a>
         <P class="obs">Disponível em Todas as Plataformas Digitais.</P>
       </div>
+
+      <div class="inicio">
+      <p class="titulo_anuncio">Especial de Natal</p>
+      <p class="sub_anuncio">NATAL DE PAZ</p>
+      <a href="https://www.youtube.com/watch?v=HMbno5I0nXU">
+        <img class="anuncio" src="../assets/anuncios/411896263_18029654497753675_3391167480057358289_n.jpg" alt="">
+        </a>
+        <P class="obs">Dê um clique na imagem para ver o vídeo no YouTube.</P>
+      </div>
+
     <div class="main">
       <h2>NOSSA PROGRAMAÇÃO</h2>
 
       <div class="card">
         <img
-          src="../assets/imagens/local-de-culto-da-igreja-logotipo-icone-vetorial-simbolo-ilustracao-design_629573-50.avif"
+          src="../assets/imagens/igreja.jpg"
           alt="" class="imagem">
         <div class="texto">
           <p class="subtitulo">Cultos</p>
