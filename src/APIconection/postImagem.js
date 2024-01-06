@@ -8,7 +8,7 @@ export async function enviarParaAPI(imagem, nome, id_pessoa) {
       params.append('id_pessoa', id_pessoa);
   
       //const url = 'https://backend-cadigreja.onrender.com/inserir_imagem?' + params.toString();
-      const url = 'http://34.133.180.161/inserir_imagem?' + params.toString();
+      const url = 'http://34.133.61.241/inserir_imagem?' + params.toString();
   
       const response = await fetch(url, {
         method: 'POST',
